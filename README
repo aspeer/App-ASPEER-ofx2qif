@@ -9,12 +9,26 @@ To install this module, run the following commands:
 	make test
 	make install
 
+Or on modern Perl distributions simply run:
+
+        cpan .
+
+PREREQUISITES
+
+This script requires additional Perl modules that must be installed
+from the CPAN Perl module repository. You will need to install modules
+
+Finance::OFX::Parse
+Finance::QIF
+
+for this script to work correctly.
+
 SUPPORT AND DOCUMENTATION
 
 After installing, you can find documentation for this module with the
-perldoc command.
+command.
 
-    perldoc ofx2qif
+        man ofx2qif.pl
 
 LICENSE AND COPYRIGHT
 
@@ -22,4 +36,4 @@ Copyright (C) 2013 Andrew Speer
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the the GNU GENERAL PUBLIC LICENSE (2.0), distributed
-with this software
+with this software.

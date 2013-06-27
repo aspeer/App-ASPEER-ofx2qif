@@ -8,12 +8,11 @@ package main;
 #  Pragma
 #
 use strict qw(vars);
-use vars qw($VERSION);
+use vars qw($VERSION $Debug);
 
 
 #  External modules
 #
-use Data::Dumper;
 use IO::File;
 use Finance::OFX::Parse;
 use Finance::QIF;
@@ -21,6 +20,12 @@ use POSIX qw(strftime);
 use Getopt::Long;
 use Pod::Usage;
 use FindBin qw($RealBin $Script);
+
+
+#  Data::Dumper used in debugging only
+#
+use Data::Dumper;
+$Data::Dumper::Indent=1;
 
 
 #  Constants
@@ -71,7 +76,7 @@ use constant {
 
 #  Version Info, must be all one line for MakeMaker, CPAN.
 #
-$VERSION='1.002';
+$VERSION='1.003';
 
 
 #  Run main routine
@@ -135,6 +140,7 @@ sub getopt {
 
     #  Return option hash ref
     #
+    debug('opt %s', Dumper(\%opt)) if ($Debug=$opt{'debug'});
     return \%opt;
 
 }
@@ -147,14 +153,9 @@ sub main {
     #
     my $opt_hr=&getopt(shift());
     my ($ofx_fn, $qif_fn)=@{$opt_hr}{qw(infile outfile)};
+    debug("ofx_fn: $ofx_fn, qif_fn: $qif_fn");
  
  
-    #  Check infile supplied
-    #
-    #$ofx_fn ||
-    #    die "usage: $0 infile <outfile>";
-
-
     #  Slurp in OFX file
     #
     my $ofx_fh=IO::File->new($ofx_fn, O_RDONLY) ||
@@ -179,7 +180,8 @@ sub main {
     #
     my $ofx_hr=Finance::OFX::Parse::parse($ofx_data) ||
         die "unable to parse OFX data";
-    
+    debug('ofx_hr ^%s', Dumper($ofx_hr));
+
 
     #  Declare vars we'll use to process, create lookup table based on OFX tree for Bank and
     #  Credit card statement types.
@@ -205,6 +207,7 @@ sub main {
     # 
     foreach my $key (keys %{$ofx_hr->{'ofx'}}) {
       if ($qif_header=$qif_lookup{$ofx_account_type=$key}[0]) {
+      debug("ofx_qif_header:    $qif_header");
       ($ofx_qif_header, $ofx_lookup_trxn_ar, $ofx_lookup_id_ar)=
           @{$qif_lookup{$ofx_account_type}}[0..2];
         last;
@@ -212,12 +215,15 @@ sub main {
     }
     $ofx_account_type || 
       die('unable to determine OFX account type');
-    #print 
-    #    "ofx_account_type:      $ofx_account_type\n",
-    #    "ofx_qif_header:        $ofx_qif_header\n",
-    #    'ofx_lookup_trxn_ar:    ',Dumper($ofx_lookup_trxn_ar),"\n",
-    #    'ofx_lookup_id_ar:      ',Dumper($ofx_lookup_id_ar),"\n";        
-    #($ofx_qif_header, $ofx_lookup_trxn_ar, $ofx_lookup_id_ar)=
+    debug(join("\n", (
+        'ofx_account_type:      %s',
+        'ofx_lookup_trxn_ar:    %s',
+        'ofx_lookup_id_ar:      %s',
+        )), 
+        $ofx_account_type, 
+        Dumper($ofx_lookup_trxn_ar), 
+        Dumper($ofx_lookup_id_ar)
+    );
 
 
     #  Descend into tree to get statement transactions as array
@@ -226,6 +232,7 @@ sub main {
     while (my $key=shift @{$ofx_lookup_trxn_ar}) {
       $ofx_trxn_ar=$ofx_trxn_ar->{$key};
     }
+    debug('ofx_trxn_ar: %s', Dumper($ofx_trxn_ar));
     
     
     #  Descend into tree to get account id information
@@ -234,6 +241,7 @@ sub main {
     while (my $key=shift @{$ofx_lookup_id_ar}) {
       $ofx_account_id=$ofx_account_id->{$key};
     }
+    debug("ofx_account_id: $ofx_account_id");
     
     
     #  Sanity check or quit
@@ -246,8 +254,8 @@ sub main {
     
     #  Now combing and print results in QIF format. Open output file
     #
-    $qif_fn ||= '-';
     my $out_fh = Finance::QIF->new( file => ">$qif_fn" );
+    debug("out_fh: $out_fh");
     
     
     #  Send out account header information
@@ -306,6 +314,7 @@ sub main {
       
       #  Submit to Finance::QIF for output to file handle
       #
+      debug('write %s', Dumper(\%qif));
       $out_fh->write(\%qif);
       
     };
@@ -342,6 +351,12 @@ sub qif_field_format {
     
 }
         
+
+sub debug {
+
+    printf STDERR (shift()."\n", @_) if $Debug;
+    
+}
 
 __END__
 
@@ -381,6 +396,14 @@ Show version information
 
 =over 4
 
+=item --debug
+
+Show debugging information
+
+=back
+
+=over 4
+
 =item -o, --outfile
 
 Output file, defaults to STDOUT
@@ -415,7 +438,7 @@ Which OFX number field to use in QIF files - fitid (default), checknum
 
 =item --qif_payee_field
 
-Which OFX number field to use in QIF files - payee (default), name
+Which OFX payee field to use in QIF files - payee (default), name
 
 =back
 
