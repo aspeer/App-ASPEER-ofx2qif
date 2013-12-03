@@ -76,7 +76,7 @@ use constant {
 
 #  Version Info, must be all one line for MakeMaker, CPAN.
 #
-$VERSION='1.004';
+$VERSION='1.005';
 
 
 #  Run main routine
@@ -252,7 +252,6 @@ sub main {
         #  Descend into tree to get statement transactions as array
         #
         my $ofx_trxn_ar=$ofx_hr->{'ofx'}{$ofx_account_type};
-        #while (my $key=shift @{$ofx_lookup_trxn_ar}) {
         foreach my $key (@{$ofx_lookup_trxn_ar}) {
             $ofx_trxn_ar=$ofx_trxn_ar->{$key};
         }
@@ -263,7 +262,6 @@ sub main {
         #  Descend into tree to get account id information
         #
         $ofx_account_id=$ofx_hr->{'ofx'}{$ofx_account_type};
-        #while (my $key=shift @{$ofx_lookup_id_ar}) {
         foreach my $key (@{$ofx_lookup_id_ar}) {
             $ofx_account_id=$ofx_account_id->{$key};
         }
