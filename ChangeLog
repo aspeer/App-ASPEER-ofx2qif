@@ -1,0 +1,53 @@
+commit 66d677149c08e182285623f013fd78b813820abf
+Author: Andrew Speer <andrew.speer@isolutions.com.au>
+Date:   Tue Dec 3 23:04:33 2013 +1030
+
+    Tag: App-ASPEER-ofx2qif_1.005
+    
+    Cleanup and perl pretty
+
+M	bin/ofx2qif.pl
+
+commit 3150b60371444846f423ba4b662a4f2b9a5f134a
+Author: Andrew Speer <andrew.speer@isolutions.com.au>
+Date:   Tue Dec 3 22:57:28 2013 +1030
+
+    Tag: App-ASPEER-ofx2qif_1.004
+    
+    Now converts multiple OFX files from command line, sorts and de-dups transactions
+
+M	bin/ofx2qif.pl
+
+commit 1e4ea0c007a68279117df3c13837c807801ac184
+Author: Andrew Speer <andrew.speer@isolutions.com.au>
+Date:   Fri Jun 28 01:02:02 2013 +0930
+
+    Tag: App-ASPEER-ofx2qif_1.003
+    
+    Added debugging option, fixed typo in POD options and updated README
+
+M	README
+M	bin/ofx2qif.pl
+
+commit 3bbd0661be9a507a0b67d9afbe03e31fe2e6c7c9
+Author: Andrew Speer <andrew.speer@isolutions.com.au>
+Date:   Thu Jun 27 00:54:13 2013 +0930
+
+    Tag: App-ASPEER-ofx2qif_1.002
+    
+    Initial import into Git
+
+M	bin/ofx2qif.pl
+
+commit 84b3847d94abde64b770026b3489e1ed14aacbdd
+Author: Andrew Speer <andrew.speer@isolutions.com.au>
+Date:   Thu Jun 27 00:53:00 2013 +0930
+
+    MANIFEST Import
+
+A	Changes
+A	LICENSE
+A	MANIFEST
+A	Makefile.PL
+A	README
+A	bin/ofx2qif.pl
