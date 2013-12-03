@@ -1,3 +1,23 @@
+commit e69ebad0c6ef1a52f85929ccb020f2f0df1d8bd1
+Author: Andrew Speer <andrew.speer@isolutions.com.au>
+Date:   Tue Dec 3 23:13:00 2013 +1030
+
+    Tag: App-ASPEER-ofx2qif_1.006
+    
+    Final update after fixes to ChangeLog
+
+M	MANIFEST
+M	bin/ofx2qif.pl
+
+commit bbee7aafb592a5941dad02c2fabea6fc460ede98
+Author: Andrew Speer <andrew.speer@isolutions.com.au>
+Date:   Tue Dec 3 23:09:02 2013 +1030
+
+    Updated to reflect correct ChangeLog file
+
+A	ChangeLog
+D	Changes
+
 commit 66d677149c08e182285623f013fd78b813820abf
 Author: Andrew Speer <andrew.speer@isolutions.com.au>
 Date:   Tue Dec 3 23:04:33 2013 +1030

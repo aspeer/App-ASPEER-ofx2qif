@@ -4,12 +4,15 @@ INSTALLATION
 
 To install this module, run the following commands:
 
+        git clone https://github.com/aspeer/App-ASPEER-ofx2qif
+        cd App-ASPEER-ofx2qif
+
 	perl Makefile.PL
 	make
 	make test
 	make install
 
-Or on modern Perl distributions simply run:
+Or on modern Perl distributions simply run (after git clone and cd):
 
         cpan .
 
