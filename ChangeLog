@@ -1,3 +1,15 @@
+commit 40175b259fd514bf7f6d3d0aedbc3430e71cce9b
+Author: Andrew Speer <andrew.speer@isolutions.com.au>
+Date:   Tue Dec 3 23:15:32 2013 +1030
+
+    Tag: App-ASPEER-ofx2qif_1.007
+    
+    Updated README
+
+M	ChangeLog
+M	README
+M	bin/ofx2qif.pl
+
 commit e69ebad0c6ef1a52f85929ccb020f2f0df1d8bd1
 Author: Andrew Speer <andrew.speer@isolutions.com.au>
 Date:   Tue Dec 3 23:13:00 2013 +1030

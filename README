@@ -1,5 +1,9 @@
 ofx2qif
 
+OVERVIEW
+
+Perl app to convert Financial OFX files to Quicken QIF format
+
 INSTALLATION
 
 To install this module, run the following commands:
